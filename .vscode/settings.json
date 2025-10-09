@@ -1,4 +1,21 @@
 {
-  "editor.bracketPairColorization.enabled": true,
-  "editor.guides.bracketPairs": true
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": false,
+    "strings": true
+  },
+  "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false,
+  "unocss.root": "./",
+  "unocss.enable": true,
+  "unocss.include": [
+    "**/*.vue",
+    "**/*.js",
+    "**/*.ts",
+    "**/*.jsx",
+    "**/*.tsx",
+    "**/*.html"
+  ],
+  "unocss.exclude": ["node_modules", "dist"]
 }
