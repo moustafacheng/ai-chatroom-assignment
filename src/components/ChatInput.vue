@@ -22,10 +22,11 @@
         <!-- Send button -->
         <button
           @click="sendMessage"
-          :disabled="!messageText.trim()"
+          :disabled="!messageText.trim() || isLoading"
           class="tw-w-8 tw-h-8 tw-bg-teal-500 tw-rounded-full tw-flex tw-items-center tw-justify-center tw-text-white hover:tw-bg-teal-600 disabled:tw-bg-gray-300 disabled:tw-cursor-not-allowed tw-transition-colors"
         >
-          <i class="fas fa-arrow-right tw-text-xs"></i>
+          <i v-if="!isLoading" class="fas fa-chevron-right tw-text-xs"></i>
+          <q-spinner v-else size="16px" color="white" />
         </button>
       </div>
     </div>
@@ -34,6 +35,13 @@
 
 <script setup>
 import { ref } from "vue";
+
+const props = defineProps({
+  isLoading: {
+    type: Boolean,
+    default: false,
+  },
+});
 
 const emit = defineEmits(["send-message"]);
 

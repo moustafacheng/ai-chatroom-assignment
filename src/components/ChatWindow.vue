@@ -7,7 +7,7 @@
       :messages="messages"
       @typewriter-complete="onTypewriterComplete"
     />
-    <ChatInput @send-message="handleSendMessage" />
+    <ChatInput @send-message="handleSendMessage" :is-loading="isAIResponding" />
   </div>
 </template>
 
@@ -43,6 +43,8 @@ const messages = ref([
   },
 ]);
 
+const isAIResponding = ref(false);
+
 const toggleChat = () => {
   emit("toggle");
 };
@@ -60,6 +62,9 @@ const handleSendMessage = async (message) => {
     timestamp: message.timestamp,
   };
   messages.value.push(userMessage);
+
+  // Set loading state to true when AI starts responding
+  isAIResponding.value = true;
 
   // Try to find a matching response using fuzzy search
   const match = findBestMatch(message.content, MESSAGE_MOCK_MAP);
@@ -84,7 +89,8 @@ const handleSendMessage = async (message) => {
 };
 
 const onTypewriterComplete = (messageId) => {
-  // Optional: Handle typewriter completion if needed
+  // Set loading state to false when typewriter completes
+  isAIResponding.value = false;
   console.log(`Typewriter completed for message ${messageId}`);
 };
 </script>
