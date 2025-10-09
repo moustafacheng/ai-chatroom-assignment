@@ -1,14 +1,8 @@
 <template>
-  <div class="tw-flex tw-items-center tw-gap-2">
-    <span class="tw-text-gray-500 tw-text-sm">Thinking</span>
-    <div class="tw-flex tw-gap-1">
-      <div
-        v-for="i in 3"
-        :key="i"
-        class="tw-w-1 tw-h-1 tw-bg-gray-400 tw-rounded-full tw-animate-pulse"
-        :style="{ animationDelay: `${(i - 1) * 0.2}s` }"
-      ></div>
-    </div>
+  <div class="thinking-container">
+    <span class="thinking-text tw-leading-relaxed tw-text-[16px]"
+      >Thinking...</span
+    >
   </div>
 </template>
 
@@ -17,19 +11,34 @@
 </script>
 
 <style scoped>
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 0.4;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.2);
-  }
+.thinking-container {
+  display: flex;
+  align-items: center;
 }
 
-.tw-animate-pulse {
-  animation: pulse 1.5s ease-in-out infinite;
+.thinking-text {
+  color: #6b7280;
+  background: linear-gradient(
+    90deg,
+    #6b7280 0%,
+    #6b7280 40%,
+    #ffffff 50%,
+    #6b7280 60%,
+    #6b7280 100%
+  );
+  background-size: 200% 200%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: wave 2.5s ease-in-out infinite;
+}
+
+@keyframes wave {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
 }
 </style>
