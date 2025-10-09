@@ -31,6 +31,7 @@
           :text="message.content"
           :speed="message.typewriterSpeed || 30"
           @complete="onTypewriterComplete"
+          @typing="onTypewriterTyping"
         />
       </div>
 
@@ -52,10 +53,14 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["typewriter-complete"]);
+const emit = defineEmits(["typewriter-complete", "typewriter-typing"]);
 
 const onTypewriterComplete = () => {
   emit("typewriter-complete", props.message.id);
+};
+
+const onTypewriterTyping = () => {
+  emit("typewriter-typing", props.message.id);
 };
 </script>
 

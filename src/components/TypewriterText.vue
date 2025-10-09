@@ -20,7 +20,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["complete"]);
+const emit = defineEmits(["complete", "typing"]);
 
 const displayedText = ref("");
 const isTyping = ref(false);
@@ -72,6 +72,9 @@ const startTypewriter = () => {
       // Convert partial markdown to HTML
       displayedText.value = marked(partialMarkdown);
       currentIndex++;
+
+      // Emit typing event for scroll management
+      emit("typing");
     } else {
       // Typing complete - show full HTML
       displayedText.value = htmlText;
