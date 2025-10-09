@@ -22,7 +22,21 @@
     </div>
 
     <!-- Chat Components -->
-    <ChatWindow :is-open="isChatOpen" @toggle="toggleChat" @close="closeChat" />
+    <transition
+      enter-active-class="tw-transition-all tw-duration-300 tw-ease-out"
+      leave-active-class="tw-transition-all tw-duration-200 tw-ease-in"
+      enter-from-class="tw-opacity-0 tw-scale-95 tw-translate-y-4"
+      enter-to-class="tw-opacity-100 tw-scale-100 tw-translate-y-0"
+      leave-from-class="tw-opacity-100 tw-scale-100 tw-translate-y-0"
+      leave-to-class="tw-opacity-0 tw-scale-95 tw-translate-y-4"
+    >
+      <ChatWindow
+        v-if="isChatOpen"
+        :is-open="isChatOpen"
+        @toggle="toggleChat"
+        @close="closeChat"
+      />
+    </transition>
     <FloatingButton @toggle="toggleChat" />
   </q-page>
 </template>

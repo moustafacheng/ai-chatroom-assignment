@@ -1,6 +1,5 @@
 <template>
   <div
-    v-if="isOpen"
     class="tw-fixed tw-bottom-[78px] tw-right-[30px] tw-w-[45vw] tw-h-[70vh] tw-bg-white tw-rounded-lg tw-overflow-hidden tw-shadow-2xl tw-flex tw-flex-col tw-z-50"
   >
     <ChatHeader :is-open="isOpen" @toggle="toggleChat" @close="closeChat" />
