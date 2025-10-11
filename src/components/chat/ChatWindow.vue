@@ -66,26 +66,29 @@ const handleSendMessage = async (message) => {
   // Set loading state to true when AI starts responding
   isAIResponding.value = true;
 
-  // Try to find a matching response using fuzzy search
-  const match = findBestMatch(message.content, MESSAGE_MOCK_MAP);
+  // Wait 1 second before showing thinking animation
+  setTimeout(() => {
+    // Try to find a matching response using fuzzy search
+    const match = findBestMatch(message.content, MESSAGE_MOCK_MAP);
 
-  if (match) {
-    // Handle matched response
-    handleAIResponse({
-      content: match.message.content,
-      messageIdCounter: messageIdCounter++,
-      messages: messages.value,
-      isMatch: true,
-    });
-    messageIdCounter++; // Increment for the AI response
-  } else {
-    // Handle generic response
-    handleGenericAIResponse({
-      messageIdCounter: messageIdCounter++,
-      messages: messages.value,
-    });
-    messageIdCounter++; // Increment for the AI response
-  }
+    if (match) {
+      // Handle matched response
+      handleAIResponse({
+        content: match.message.content,
+        messageIdCounter: messageIdCounter++,
+        messages: messages.value,
+        isMatch: true,
+      });
+      messageIdCounter++; // Increment for the AI response
+    } else {
+      // Handle generic response
+      handleGenericAIResponse({
+        messageIdCounter: messageIdCounter++,
+        messages: messages.value,
+      });
+      messageIdCounter++; // Increment for the AI response
+    }
+  }, 1000); // 1 second delay
 };
 
 const onTypewriterComplete = (messageId) => {

@@ -48,7 +48,7 @@ const emit = defineEmits(["send-message"]);
 const messageText = ref("");
 
 const sendMessage = () => {
-  if (messageText.value.trim()) {
+  if (messageText.value.trim() && !props.isLoading) {
     emit("send-message", {
       content: messageText.value.trim(),
       timestamp: new Date(),

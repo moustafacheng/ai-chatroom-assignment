@@ -13,24 +13,6 @@ function getRandomDelay(range) {
 }
 
 /**
- * Create an AI response message object
- * @param {string} content - The response content
- * @param {boolean} useTypewriter - Whether to use typewriter effect
- * @param {number} messageId - Unique message ID
- * @returns {Object} AI response message object
- */
-function createAIResponse(content, useTypewriter = true, messageId) {
-  return {
-    id: messageId,
-    sender: "ai",
-    content,
-    useTypewriter,
-    typewriterSpeed: AI_RESPONSE_CONFIG.TYPEWRITER_SPEED,
-    timestamp: new Date(),
-  };
-}
-
-/**
  * Create a thinking message object
  * @param {number} messageId - Unique message ID
  * @returns {Object} Thinking message object
@@ -73,23 +55,29 @@ export function handleAIResponse({
 
   const delay = getRandomDelay(delayRange);
 
-  // Set timeout to replace thinking with actual response
+  // Set timeout to update thinking message with actual response
   setTimeout(() => {
-    // Remove thinking message
+    // Find and update the thinking message instead of removing/adding
     const thinkingIndex = messages.findIndex(
       (m) => m.id === thinkingMessage.id
     );
     if (thinkingIndex !== -1) {
-      messages.splice(thinkingIndex, 1);
-    }
+      // Update the existing message to transition from thinking to typewriter
+      const updatedMessage = {
+        ...thinkingMessage,
+        content,
+        isThinking: false,
+        useTypewriter: true,
+        typewriterSpeed: AI_RESPONSE_CONFIG.TYPEWRITER_SPEED,
+      };
 
-    // Create and add AI response
-    const aiResponse = createAIResponse(content, true, messageIdCounter + 1);
-    messages.push(aiResponse);
+      // Replace the thinking message with the updated message
+      messages.splice(thinkingIndex, 1, updatedMessage);
 
-    // Call completion callback if provided
-    if (onComplete) {
-      onComplete(aiResponse);
+      // Call completion callback if provided
+      if (onComplete) {
+        onComplete(updatedMessage);
+      }
     }
   }, delay);
 

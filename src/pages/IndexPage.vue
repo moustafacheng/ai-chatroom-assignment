@@ -23,12 +23,12 @@
 
     <!-- Chat Components -->
     <transition
-      enter-active-class="tw-transition-all tw-duration-300 tw-ease-out"
-      leave-active-class="tw-transition-all tw-duration-200 tw-ease-in"
-      enter-from-class="tw-opacity-0 tw-scale-95 tw-translate-y-4"
+      enter-active-class="tw-transition-all tw-duration-300 tw-ease-in-out"
+      leave-active-class="tw-transition-all tw-duration-300 tw-ease-in-out"
+      enter-from-class="tw-opacity-0 tw-scale-90 tw-translate-y-4"
       enter-to-class="tw-opacity-100 tw-scale-100 tw-translate-y-0"
       leave-from-class="tw-opacity-100 tw-scale-100 tw-translate-y-0"
-      leave-to-class="tw-opacity-0 tw-scale-95 tw-translate-y-4"
+      leave-to-class="tw-opacity-0 tw-scale-90 tw-translate-y-4"
     >
       <ChatWindow
         v-if="isChatOpen"

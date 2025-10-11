@@ -4,7 +4,17 @@
     class="tw-flex-1 tw-p-4 tw-overflow-y-auto tw-bg-white"
     @scroll="handleScroll"
   >
-    <div class="tw-space-y-[32px]">
+    <transition-group
+      name="message"
+      tag="div"
+      class="tw-space-y-[32px]"
+      enter-active-class="tw-transition-all tw-duration-150 tw-ease-in-out"
+      leave-active-class="tw-transition-all tw-duration-150 tw-ease-in-out"
+      enter-from-class="tw-opacity-0 tw-translate-y-4"
+      enter-to-class="tw-opacity-100 tw-translate-y-0"
+      leave-from-class="tw-opacity-100 tw-translate-y-0"
+      leave-to-class="tw-opacity-0 tw-translate-y-4"
+    >
       <MessageBubble
         v-for="message in messages"
         :key="message.id"
@@ -12,7 +22,7 @@
         @typewriter-complete="onTypewriterComplete"
         @typewriter-typing="onTypewriterTyping"
       />
-    </div>
+    </transition-group>
   </div>
 </template>
 
