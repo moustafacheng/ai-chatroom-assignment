@@ -19,7 +19,7 @@
           ></i>
         </div>
         <p
-          class="tw-text-teal-100 tw-text-[16px] tw-min-h[28px] tw-flex tw-items-center tw-justify-start"
+          class="tw-text-white tw-text-[16px] tw-min-h[28px] tw-flex tw-items-center tw-justify-start"
         >
           Hi there, How can we help?
         </p>
