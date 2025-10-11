@@ -1,6 +1,6 @@
 <template>
   <div class="thinking-container">
-    <span class="thinking-text tw-leading-relaxed tw-text-[16px]"
+    <span class="thinking-text tw-leading-[normal] tw-text-[16px]"
       >Thinking...</span
     >
   </div>

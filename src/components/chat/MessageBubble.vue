@@ -16,7 +16,7 @@
       class="tw-max-w-[80%] tw-px-4 tw-py-[10px] tw-rounded-br-[10px] tw-rounded-bl-[10px] tw-text-[16px] tw-break-words tw-overflow-wrap-anywhere"
       :class="
         message.sender === 'ai'
-          ? 'tw-bg-gray-0 tw-text-gray-800 tw-font-[400] tw-rounded-tr-[10px] tw-min-w-[100px] tw-min-h-[46px]' // added min-width and min-height to prevent layout shift when thinking animation is removed
+          ? 'tw-bg-gray-0 tw-text-gray-800 tw-font-[400] tw-rounded-tr-[10px] tw-min-w-[100px] tw-min-h-[39px]' // added min-width and min-height to prevent layout shift when thinking animation is removed
           : 'tw-bg-teal-100 tw-text-black tw-rounded-tl-[10px]'
       "
     >
@@ -36,7 +36,7 @@
       </div>
 
       <!-- Regular message content -->
-      <div v-else class="tw-leading-relaxed" v-html="message.content"></div>
+      <div v-else class="tw-leading-[normal]" v-html="message.content"></div>
     </div>
   </div>
 </template>

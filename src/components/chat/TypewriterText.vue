@@ -1,11 +1,11 @@
 <template>
   <div
     v-html="displayedText"
-    class="tw-leading-relaxed tw-break-words tw-overflow-wrap-anywhere"
+    class="tw-leading-[normal] tw-break-words tw-overflow-wrap-anywhere"
   ></div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { marked } from "marked";
 import { onMounted, onUnmounted, ref, watch } from "vue";
 
@@ -26,19 +26,21 @@ const displayedText = ref("");
 const isTyping = ref(false);
 let typewriterInterval = null;
 
-// Configure marked for safe HTML rendering with custom renderer for URLs
+// Configure marked with selective renderer overrides using marked.use()
 const renderer = new marked.Renderer();
 
-// Custom link renderer to add word-break classes
-renderer.link = function (data) {
-  const safeHref = String(data.href || "");
-  const safeText = String(data.text || "");
-  const titleAttr = data.title ? ` title="${data.title}"` : "";
+// Override only the link renderer to add custom styling
+renderer.link = function (token) {
+  const safeHref = String(token.href || "");
+  const safeText = String(token.text || "");
+  const titleAttr = token.title ? ` title="${token.title}"` : "";
 
   return `<a href="${safeHref}"${titleAttr} class="tw-break-all tw-text-orange-400 hover:tw-text-orange-800 tw-transition-colors tw-duration-200 tw-underline tw-font-medium" target="_blank" rel="noopener noreferrer">${safeText}</a>`;
 };
 
-marked.setOptions({
+// Do not override list/listitem; rely on CSS for styling and keep default semantics
+
+marked.use({
   breaks: true,
   gfm: true,
   renderer: renderer,
@@ -53,7 +55,7 @@ const startTypewriter = () => {
   isTyping.value = true;
 
   // Convert markdown to HTML first
-  const htmlText = marked(props.text);
+  const htmlText = marked.parse(props.text, { async: false });
 
   // Get plain text for character counting
   const tempDiv = document.createElement("div");
@@ -70,7 +72,7 @@ const startTypewriter = () => {
       const partialMarkdown = props.text.substring(0, markdownLength);
 
       // Convert partial markdown to HTML
-      displayedText.value = marked(partialMarkdown);
+      displayedText.value = marked.parse(partialMarkdown, { async: false });
       currentIndex++;
 
       // Emit typing event for scroll management
@@ -134,5 +136,50 @@ onUnmounted(() => {
   word-break: break-all;
   overflow-wrap: anywhere;
   hyphens: auto;
+}
+
+:deep(ol > li) {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+/* Base list styles */
+:deep(ul) {
+  list-style: none;
+  margin-left: 1.25rem;
+}
+
+/* Dash bullets for unordered lists */
+:deep(ul li)::marker {
+  content: "- ";
+}
+
+/* Keep numbers for ordered lists */
+:deep(ol) {
+  list-style-type: decimal;
+  margin-left: 1.25rem;
+}
+
+/* Remove nested UL defaults that would override our dash marker */
+:deep(ul ul),
+:deep(ul ul ul) {
+  list-style: none;
+}
+
+/* Nested list styles */
+:deep(ol ol) {
+  list-style-type: lower-alpha;
+}
+
+:deep(ol ol ol) {
+  list-style-type: lower-roman;
+}
+
+:deep(ul ul) {
+  list-style-type: circle;
+}
+
+:deep(ul ul ul) {
+  list-style-type: square;
 }
 </style>
