@@ -13,12 +13,12 @@
 
 <script setup>
 import { ref } from "vue";
-import { MESSAGE_MOCK_MAP } from "../mock/messages.js";
+import { MESSAGE_MOCK_MAP } from "../../mock/messages.js";
 import {
   handleAIResponse,
   handleGenericAIResponse,
-} from "../utils/aiResponseHandler.js";
-import { findBestMatch } from "../utils/fuzzySearch.js";
+} from "../../utils/aiResponseHandler.js";
+import { findBestMatch } from "../../utils/fuzzySearch.js";
 import ChatBody from "./ChatBody.vue";
 import ChatHeader from "./ChatHeader.vue";
 import ChatInput from "./ChatInput.vue";

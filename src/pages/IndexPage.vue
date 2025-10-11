@@ -43,7 +43,7 @@
 
 <script setup>
 import { ref } from "vue";
-import ChatWindow from "../components/ChatWindow.vue";
+import ChatWindow from "../components/chat/ChatWindow.vue";
 import FloatingButton from "../components/FloatingButton.vue";
 
 const isChatOpen = ref(false);

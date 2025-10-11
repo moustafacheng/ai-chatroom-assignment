@@ -39,7 +39,7 @@
 </template>
 
 <script setup>
-import NitraLogo from "./NitraLogo.vue";
+import NitraLogo from "../NitraLogo.vue";
 
 defineEmits(["close"]);
 </script>

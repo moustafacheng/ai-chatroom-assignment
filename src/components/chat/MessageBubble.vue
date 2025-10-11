@@ -42,7 +42,7 @@
 </template>
 
 <script setup>
-import NitraLogo from "./NitraLogo.vue";
+import NitraLogo from "../NitraLogo.vue";
 import ThinkingAnimation from "./ThinkingAnimation.vue";
 import TypewriterText from "./TypewriterText.vue";
 
