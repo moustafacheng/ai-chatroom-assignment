@@ -6,6 +6,7 @@
     <!-- AI Avatar -->
     <div
       v-if="message.sender === 'ai'"
+      v-once
       class="tw-w-[24px] tw-h-[24px] tw-bg-teal-700 tw-rounded-full tw-flex tw-items-center tw-justify-center"
     >
       <NitraLogo width="16px" />
