@@ -36,7 +36,7 @@
       </div>
 
       <!-- Regular message content -->
-      <div v-else class="tw-leading-[normal]" v-html="message.content"></div>
+      <div v-else class="tw-leading-[normal]">{{ message.content }}</div>
     </div>
   </div>
 </template>
