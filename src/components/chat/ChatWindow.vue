@@ -7,6 +7,8 @@
       :messages="messages"
       @typewriter-complete="onTypewriterComplete"
     />
+
+    <ConversationStarter @starter-clicked="handleStarterClick" />
     <ChatInput @send-message="handleSendMessage" :is-loading="isAIResponding" />
   </div>
 </template>
@@ -22,6 +24,7 @@ import { findBestMatch } from "../../utils/fuzzySearch.js";
 import ChatBody from "./ChatBody.vue";
 import ChatHeader from "./ChatHeader.vue";
 import ChatInput from "./ChatInput.vue";
+import ConversationStarter from "./ConversationStarter.vue";
 
 const props = defineProps({
   isOpen: {
@@ -90,5 +93,9 @@ const onTypewriterComplete = (messageId) => {
   // Set loading state to false when typewriter completes
   isAIResponding.value = false;
   console.log(`Typewriter completed for message ${messageId}`);
+};
+
+const handleStarterClick = (starter) => {
+  console.log("Conversation starter clicked:", starter);
 };
 </script>
