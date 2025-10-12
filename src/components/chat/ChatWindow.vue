@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { useChatStore } from "../../composables/useChatStore.js";
 import { MESSAGE_MOCK_MAP } from "../../mock/messages.js";
 import {
   handleAIResponse,
@@ -32,18 +32,14 @@ const props = defineProps({
 
 const emit = defineEmits(["toggle", "close"]);
 
-let messageIdCounter = 1;
-
-const messages = ref([
-  {
-    id: messageIdCounter++,
-    sender: "ai",
-    content: "Welcome to Nitra AI! How can I help you today?",
-    timestamp: new Date(),
-  },
-]);
-
-const isAIResponding = ref(false);
+// Use the global chat store
+const {
+  messages,
+  isAIResponding,
+  addMessage,
+  getNextMessageId,
+  markTypewriterComplete,
+} = useChatStore();
 
 const toggleChat = () => {
   emit("toggle");
@@ -54,14 +50,12 @@ const closeChat = () => {
 };
 
 const handleSendMessage = async (message) => {
-  // Add user message
-  const userMessage = {
-    id: messageIdCounter++,
+  // Add user message using the store
+  addMessage({
     sender: "user",
     content: message.content,
     timestamp: message.timestamp,
-  };
-  messages.value.push(userMessage);
+  });
 
   // Set loading state to true when AI starts responding
   isAIResponding.value = true;
@@ -75,23 +69,24 @@ const handleSendMessage = async (message) => {
       // Handle matched response
       handleAIResponse({
         content: match.message.content,
-        messageIdCounter: messageIdCounter++,
+        messageIdCounter: getNextMessageId(),
         messages: messages.value,
         isMatch: true,
       });
-      messageIdCounter++; // Increment for the AI response
     } else {
       // Handle generic response
       handleGenericAIResponse({
-        messageIdCounter: messageIdCounter++,
+        messageIdCounter: getNextMessageId(),
         messages: messages.value,
       });
-      messageIdCounter++; // Increment for the AI response
     }
   }, 1000); // 1 second delay
 };
 
 const onTypewriterComplete = (messageId) => {
+  // Mark the message as completed (remove typewriter flags)
+  markTypewriterComplete(messageId);
+
   // Set loading state to false when typewriter completes
   isAIResponding.value = false;
   console.log(`Typewriter completed for message ${messageId}`);
