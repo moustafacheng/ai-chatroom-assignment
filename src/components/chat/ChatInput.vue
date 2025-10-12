@@ -10,13 +10,13 @@
         class="tw-flex-1 tw-px-[20px] tw-py-[22px] tw-pr-0 tw-text-sm focus:tw-outline-none tw-text-gray-500"
       />
 
-      <div class="tw-flex tw-items-center tw-gap-[20px] tw-pr-[20px]">
+      <div class="tw-flex tw-items-center tw-gap-[10px] tw-pr-[20px]">
         <!-- File attachment button -->
         <button
           @click="handleFileUpload"
-          class="tw-text-gray-500 hover:tw-text-teal-500 tw-transition-colors"
+          class="tw-text-gray-500 hover:tw-text-teal-500 tw-transition-colors tw-w-8 tw-h-8 tw-rounded-full"
         >
-          <i class="fas fa-paperclip tw-text-sm"></i>
+          <i class="fas fa-paperclip tw-text-xl"></i>
         </button>
 
         <!-- Send button -->
