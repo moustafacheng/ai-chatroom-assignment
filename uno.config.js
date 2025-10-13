@@ -15,6 +15,16 @@ export default defineConfig({
     presetTypography(), // Typography utilities
   ],
   rules: [],
+  safelist: [
+    // Markdown link classes that are injected dynamically in JS
+    "tw-break-all",
+    "tw-text-orange-400",
+    "hover:tw-text-orange-800",
+    "tw-transition-colors",
+    "tw-duration-200",
+    "tw-underline",
+    "tw-font-medium",
+  ],
   shortcuts: {
     // Custom shortcuts for common patterns
     btn: "tw-px-4 tw-py-2 tw-rounded tw-font-semibold",

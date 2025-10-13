@@ -1,13 +1,13 @@
 <template>
   <div
     v-html="displayedText"
-    class="tw-leading-[normal] tw-break-words tw-overflow-wrap-anywhere"
+    class="markdown-content tw-leading-[normal] tw-break-words tw-overflow-wrap-anywhere"
   ></div>
 </template>
 
 <script setup lang="ts">
-import { marked } from "marked";
 import { onMounted, onUnmounted, ref, watch } from "vue";
+import { markdownToPlainText, renderMarkdown } from "../../utils/markdown";
 
 const props = defineProps({
   text: {
@@ -26,26 +26,6 @@ const displayedText = ref("");
 const isTyping = ref(false);
 let typewriterInterval = null;
 
-// Configure marked with selective renderer overrides using marked.use()
-const renderer = new marked.Renderer();
-
-// Override only the link renderer to add custom styling
-renderer.link = function (token) {
-  const safeHref = String(token.href || "");
-  const safeText = String(token.text || "");
-  const titleAttr = token.title ? ` title="${token.title}"` : "";
-
-  return `<a href="${safeHref}"${titleAttr} class="tw-break-all tw-text-orange-400 hover:tw-text-orange-800 tw-transition-colors tw-duration-200 tw-underline tw-font-medium" target="_blank" rel="noopener noreferrer">${safeText}</a>`;
-};
-
-// Do not override list/listitem; rely on CSS for styling and keep default semantics
-
-marked.use({
-  breaks: true,
-  gfm: true,
-  renderer: renderer,
-});
-
 const startTypewriter = () => {
   if (typewriterInterval) {
     clearInterval(typewriterInterval);
@@ -55,12 +35,10 @@ const startTypewriter = () => {
   isTyping.value = true;
 
   // Convert markdown to HTML first
-  const htmlText = marked.parse(props.text, { async: false });
+  const htmlText = renderMarkdown(props.text);
 
   // Get plain text for character counting
-  const tempDiv = document.createElement("div");
-  tempDiv.innerHTML = htmlText;
-  const plainText = tempDiv.textContent || tempDiv.innerText || "";
+  const plainText = markdownToPlainText(props.text);
 
   let currentIndex = 0;
 
@@ -72,7 +50,7 @@ const startTypewriter = () => {
       const partialMarkdown = props.text.substring(0, markdownLength);
 
       // Convert partial markdown to HTML
-      displayedText.value = marked.parse(partialMarkdown, { async: false });
+      displayedText.value = renderMarkdown(partialMarkdown);
       currentIndex++;
 
       // Emit typing event for scroll management
@@ -119,67 +97,5 @@ onUnmounted(() => {
 
 .tw-animate-pulse {
   animation: pulse 1s ease-in-out infinite;
-}
-
-/* Ensure proper word breaking for long URLs and text */
-.tw-break-words {
-  word-break: break-word;
-  overflow-wrap: break-word;
-}
-
-.tw-overflow-wrap-anywhere {
-  overflow-wrap: anywhere;
-}
-
-/* Additional styles for links to ensure they break properly */
-:deep(a) {
-  word-break: break-all;
-  overflow-wrap: anywhere;
-  hyphens: auto;
-}
-
-:deep(ol > li) {
-  margin-top: 16px;
-  margin-bottom: 16px;
-}
-
-/* Base list styles */
-:deep(ul) {
-  list-style: none;
-  margin-left: 1.25rem;
-}
-
-/* Dash bullets for unordered lists */
-:deep(ul li)::marker {
-  content: "- ";
-}
-
-/* Keep numbers for ordered lists */
-:deep(ol) {
-  list-style-type: decimal;
-  margin-left: 1.25rem;
-}
-
-/* Remove nested UL defaults that would override our dash marker */
-:deep(ul ul),
-:deep(ul ul ul) {
-  list-style: none;
-}
-
-/* Nested list styles */
-:deep(ol ol) {
-  list-style-type: lower-alpha;
-}
-
-:deep(ol ol ol) {
-  list-style-type: lower-roman;
-}
-
-:deep(ul ul) {
-  list-style-type: circle;
-}
-
-:deep(ul ul ul) {
-  list-style-type: square;
 }
 </style>

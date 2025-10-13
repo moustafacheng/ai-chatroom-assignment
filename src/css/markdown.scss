@@ -1,0 +1,56 @@
+.markdown-content {
+  // Ensure proper word breaking for long URLs and text
+  .tw-break-words {
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .tw-overflow-wrap-anywhere {
+    overflow-wrap: anywhere;
+  }
+
+  ol > li {
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
+
+  // Base list styles
+  ul {
+    list-style: none;
+    margin-left: 1.25rem;
+  }
+
+  // Dash bullets for unordered lists
+  ul li::marker {
+    content: "- ";
+  }
+
+  // Keep numbers for ordered lists
+  ol {
+    list-style-type: decimal;
+    margin-left: 1.25rem;
+  }
+
+  // Remove nested UL defaults that would override our dash marker
+  ul ul,
+  ul ul ul {
+    list-style: none;
+  }
+
+  // Nested list styles
+  ol ol {
+    list-style-type: lower-alpha;
+  }
+
+  ol ol ol {
+    list-style-type: lower-roman;
+  }
+
+  ul ul {
+    list-style-type: circle;
+  }
+
+  ul ul ul {
+    list-style-type: square;
+  }
+}
