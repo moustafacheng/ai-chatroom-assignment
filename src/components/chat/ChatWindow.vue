@@ -1,6 +1,6 @@
 <template>
   <div
-    class="tw-fixed tw-bottom-[78px] tw-right-[30px] tw-w-[45vw] tw-h-[70vh] tw-bg-white tw-rounded-lg tw-overflow-hidden tw-shadow-2xl tw-flex tw-flex-col tw-z-50"
+    class="tw-fixed tw-max-h-[70vh] tw-h-full tw-bg-white tw-rounded-lg tw-overflow-hidden tw-shadow-2xl tw-flex tw-flex-col tw-z-50 tw-w-[100vw] md:tw-w-[60vw] lg:tw-w-[45vw] tw-right-0 md:tw-right-[30px] tw-bottom-0 md:tw-bottom-[78px]"
   >
     <ChatHeader :is-open="isOpen" @toggle="toggleChat" @close="closeChat" />
     <ChatBody
