@@ -14,6 +14,7 @@ export function findBestMatch(query, messageMap) {
     threshold: 0.1, // Lower threshold means more strict matching
     distance: 100, // Maximum distance for a match
     keys: [""], // We're searching the keys directly
+    includeScore: true,
   });
 
   // Search for the best match
@@ -22,6 +23,13 @@ export function findBestMatch(query, messageMap) {
   // If we found a match, return the corresponding message
   if (results.length > 0) {
     const matchedKey = results[0].item;
+    console.log("results", results);
+    console.log(
+      "messageMap[matchedKey].message",
+      messageMap[matchedKey].message
+    );
+    console.log("results[0].score", results[0].score);
+
     return {
       key: matchedKey,
       message: messageMap[matchedKey].message,
