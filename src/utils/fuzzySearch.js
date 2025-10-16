@@ -23,12 +23,6 @@ export function findBestMatch(query, messageMap) {
   // If we found a match, return the corresponding message
   if (results.length > 0) {
     const matchedKey = results[0].item;
-    console.log("results", results);
-    console.log(
-      "messageMap[matchedKey].message",
-      messageMap[matchedKey].message
-    );
-    console.log("results[0].score", results[0].score);
 
     return {
       key: matchedKey,
